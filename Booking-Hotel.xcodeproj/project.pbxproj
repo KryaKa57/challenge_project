@@ -55,6 +55,7 @@
 		649CA2AE2B584E7B0060A2F4 /* FinalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649CA2AD2B584E7B0060A2F4 /* FinalView.swift */; };
 		649CA2B02B584E830060A2F4 /* FinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649CA2AF2B584E830060A2F4 /* FinalViewController.swift */; };
 		649CA2B22B585ACA0060A2F4 /* TouristStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649CA2B12B585ACA0060A2F4 /* TouristStackView.swift */; };
+		649CA2B52B5895930060A2F4 /* Simulator Screen Recording - iPhone 14 Pro.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 649CA2B42B5895930060A2F4 /* Simulator Screen Recording - iPhone 14 Pro.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,7 @@
 		649CA2AD2B584E7B0060A2F4 /* FinalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalView.swift; sourceTree = "<group>"; };
 		649CA2AF2B584E830060A2F4 /* FinalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalViewController.swift; sourceTree = "<group>"; };
 		649CA2B12B585ACA0060A2F4 /* TouristStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouristStackView.swift; sourceTree = "<group>"; };
+		649CA2B42B5895930060A2F4 /* Simulator Screen Recording - iPhone 14 Pro.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Simulator Screen Recording - iPhone 14 Pro.mp4"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				645292082B554DC400855E7E /* Booking-Hotel */,
+				649CA2B32B5895440060A2F4 /* Recording */,
 				645292072B554DC400855E7E /* Products */,
 				903D1A497BD910288C14E6FC /* Pods */,
 				B174AAAF4B79BAF5E841A421 /* Frameworks */,
@@ -269,6 +272,14 @@
 			path = FinalScreen;
 			sourceTree = "<group>";
 		};
+		649CA2B32B5895440060A2F4 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				649CA2B42B5895930060A2F4 /* Simulator Screen Recording - iPhone 14 Pro.mp4 */,
+			);
+			path = Recording;
+			sourceTree = "<group>";
+		};
 		903D1A497BD910288C14E6FC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +361,7 @@
 				645292362B55511400855E7E /* SFPRODISPLAYBLACKITALIC.OTF in Resources */,
 				645292372B55511400855E7E /* SFPRODISPLAYSEMIBOLDITALIC.OTF in Resources */,
 				645292322B55511400855E7E /* SFPRODISPLAYMEDIUM.OTF in Resources */,
+				649CA2B52B5895930060A2F4 /* Simulator Screen Recording - iPhone 14 Pro.mp4 in Resources */,
 				645292162B554DC500855E7E /* LaunchScreen.storyboard in Resources */,
 				645292132B554DC500855E7E /* Assets.xcassets in Resources */,
 				645292352B55511400855E7E /* SFPRODISPLAYBOLD.OTF in Resources */,

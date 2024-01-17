@@ -86,7 +86,7 @@ class BookingViewController: UIViewController {
         }
         
         if (bookingView.phoneNumberTextField.text?.isEmpty ?? true)
-                || ((bookingView.phoneNumberTextField.text?.contains("*")) == nil) {
+                || (bookingView.phoneNumberTextField.text?.contains("*") != false) {
             hasEmptyTextField = true
             bookingView.phoneNumberTextField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
         }
