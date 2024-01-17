@@ -48,7 +48,7 @@ class RoomCell: UICollectionViewCell {
     }()
 
     lazy var moreInfoButton: CustomColoredButton = {
-        let button = CustomColoredButton(frame: .zero, color: .blue, rightSideImage: true, title: "Подробнее о номере")
+        let button = CustomColoredButton(frame: .zero, color: .blue, rightSideImage: true, title: "Подробнее о номере  ")
         button.setImage(UIImage(systemName: "chevron.right",
                                 withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)), for: .normal)
         return button

@@ -48,6 +48,7 @@ class TagLabelsView: UIView {
             newLabel.layer.masksToBounds = true
             newLabel.layer.cornerRadius = 5
             newLabel.textColor = UIColor(rgb: 0x828796)
+            newLabel.font = Constant.defaultFont
             addSubview(newLabel)
         }
         

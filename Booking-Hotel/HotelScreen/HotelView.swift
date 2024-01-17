@@ -14,6 +14,7 @@ class HotelView: UIView {
     lazy var mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.bounces = true
+        scrollView.backgroundColor = UIColor(rgb: 0xF6F6F9)
         return scrollView
     }()
     
@@ -26,7 +27,7 @@ class HotelView: UIView {
         stack.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         stack.isLayoutMarginsRelativeArrangement = true
         stack.layer.cornerRadius = 12
-        stack.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner]
+        stack.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         return stack
     }()
     
@@ -147,7 +148,6 @@ class HotelView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        // Add top border
         let borderLayer = CALayer()
         borderLayer.backgroundColor = UIColor(rgb: 0xE8E9EC).cgColor
         borderLayer.frame = CGRect(x: 0, y: 0, width: bottomView.bounds.size.width, height: 1)
@@ -201,12 +201,14 @@ class HotelView: UIView {
     }
     
     private func initialize() {
-        backgroundColor = UIColor(rgb: 0xF6F6F9)
+        backgroundColor = .white
+        
         mainInfoStack.addArrangedSubview(scrollView)
         mainInfoStack.addArrangedSubview(ratingButton)
         mainInfoStack.addArrangedSubview(nameLabel)
         mainInfoStack.addArrangedSubview(adressLabel)
         mainInfoStack.addArrangedSubview(priceLabel)
+        mainInfoStack.setCustomSpacing(8, after: ratingButton)
         mainInfoStack.setCustomSpacing(8, after: nameLabel)
         mainScrollView.addSubview(mainInfoStack)
         mainScrollView.addSubview(pageControl)
@@ -222,7 +224,8 @@ class HotelView: UIView {
         addSubview(mainScrollView)
         
         mainScrollView.snp.makeConstraints { make in
-            make.top.leading.width.height.equalToSuperview()
+            make.top.equalToSuperview().offset(Constant.systemHeight * 0.1)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         scrollView.snp.makeConstraints { make in
             make.width.equalToSuperview().offset(-32)

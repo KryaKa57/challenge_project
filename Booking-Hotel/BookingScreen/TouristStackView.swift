@@ -74,7 +74,7 @@ class TouristStackView: CustomStackView {
             make.height.equalTo(340)
         }
     }
-    
+        
     @objc func toggleDropdown() {
         UIView.animate(withDuration: 0.3) {
             self.dropdownStackView.isHidden = !self.dropdownStackView.isHidden

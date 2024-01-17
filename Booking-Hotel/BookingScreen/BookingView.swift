@@ -28,6 +28,7 @@ class BookingView: UIView {
     
     lazy var mainInfoStackView: CustomStackView = {
         let stack = CustomStackView()
+        stack.spacing = 8
         return stack
     }()
     
@@ -229,6 +230,7 @@ class BookingView: UIView {
         customerInfoStackView.addArrangedSubview(phoneNumberTextField)
         customerInfoStackView.addArrangedSubview(emailTextField)
         customerInfoStackView.addArrangedSubview(additionalInfoLabel)
+        customerInfoStackView.setCustomSpacing(8, after: phoneNumberTextField)
         
         allTouristStackView.addArrangedSubview(firstTouristStackView)
         

@@ -45,7 +45,7 @@ class BookingViewController: UIViewController {
         bookingViewModel.delegate = self
         navigationManager.delegate = self
         
-        bookingView.nextButton.addTarget(self, action: #selector(goToNextScreen), for: .touchUpInside)
+        bookingView.nextButton.addTarget(self, action: #selector(checkFields), for: .touchUpInside)
         bookingView.addButton.addTarget(self, action: #selector(addNewTourist), for: .touchUpInside)
     }
     
@@ -53,8 +53,10 @@ class BookingViewController: UIViewController {
         navigationManager.setupNavigationBar(self, title: "Бронирование", hasLeftItem: true)
     }
     
-    @objc func goToNextScreen() {
-        navigationController?.pushViewController(FinalViewController(view: FinalView()), animated: true)
+    @objc func checkFields() {
+        if !isAnyTextFieldEmpty(in: bookingView.allTouristStackView) {
+            navigationController?.pushViewController(FinalViewController(view: FinalView()), animated: true)
+        }
     }
     
     @objc func addNewTourist() {
@@ -62,6 +64,28 @@ class BookingViewController: UIViewController {
         let newTourist = TouristStackView(textValue: "\(bookingViewModel.numberOfTourist.toString()) турист")
         bookingView.allTouristStackView.addArrangedSubview(newTourist)
         bookingView.layoutIfNeeded()
+        newTourist.toggleDropdown()
+        bookingView.layoutIfNeeded()
+    }
+    
+    func isAnyTextFieldEmpty(in stackView: UIStackView) -> Bool {
+        var hasEmptyTextField = false
+
+        for subview in stackView.subviews {
+            if let textField = subview as? UITextField {
+                textField.delegate = self
+                if textField.text?.isEmpty ?? true {
+                    hasEmptyTextField = true
+                    textField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
+                }
+            } else if let nestedStackView = subview as? UIStackView {
+                if isAnyTextFieldEmpty(in: nestedStackView) {
+                    hasEmptyTextField = true
+                }
+            }
+        }
+
+        return hasEmptyTextField
     }
 }
 
@@ -118,12 +142,30 @@ extension BookingViewController: UITextFieldDelegate {
             let newString = (text as NSString).replacingCharacters(in: range, with: string)
             textField.text = format(phone: newString)
         } else {
-            let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%&'*+-/=?^_`{|}~@.")
-            let characterSet = CharacterSet(charactersIn: string)
-            return characterSet.isSubset(of: allowedCharacters)
+            return true
         }
         
         return false
+    }
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.backgroundColor = UIColor(rgb: 0xF8F8F8)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == bookingView.emailTextField {
+            if !isValidEmail(textField.text ?? "") {
+                bookingView.emailTextField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
+            }
+        }
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
     }
     
     func format(phone: String) -> String {
