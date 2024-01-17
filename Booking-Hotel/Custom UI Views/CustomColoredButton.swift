@@ -18,10 +18,12 @@ enum Color {
 class CustomColoredButton: UIButton {
     var color: Color = .blue
     var rightSideImage = false
+    var title: String = ""
     
-    init(frame: CGRect, color: Color, rightSideImage: Bool = false) {
+    init(frame: CGRect, color: Color, rightSideImage: Bool = false, title: String) {
         self.color = color
         self.rightSideImage = rightSideImage
+        self.title = title
         super.init(frame: frame)
         commonInit()
     }
@@ -35,7 +37,6 @@ class CustomColoredButton: UIButton {
         super.layoutSubviews()
         
         if rightSideImage {
-            // Adjust the image and title positions
             imageEdgeInsets = UIEdgeInsets(top: 0, left: titleLabel!.frame.width, bottom: 0, right: -titleLabel!.frame.width)
             titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageView!.frame.width, bottom: 0, right: imageView!.frame.width)
         }
@@ -43,11 +44,15 @@ class CustomColoredButton: UIButton {
     
     private func commonInit() {
         setTitleColor(color.getTitleColor(), for: .normal)
-        tintColor = color.getTitleColor()
+        tintColor = UIColor(rgb: 0x0D72FF)
         backgroundColor = color.getBackgroundColor()
         layer.cornerRadius = 5
         contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         isEnabled = false
+        
+        let attributes: [NSAttributedString.Key: Any] = [ .font: Constant.defaultFont ]
+        let attributedText = NSAttributedString(string: title, attributes: attributes)
+        setAttributedTitle(attributedText, for: .normal)
     }
     
 }

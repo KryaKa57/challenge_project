@@ -19,7 +19,6 @@ struct Hotel: Codable {
     let aboutTheHotel: AboutTheHotel
 }
 
-// MARK: - AboutTheHotel
 struct AboutTheHotel: Codable {
     let description: String
     let peculiarities: [String]

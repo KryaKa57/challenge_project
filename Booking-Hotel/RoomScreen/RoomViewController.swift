@@ -66,6 +66,7 @@ extension RoomViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomCell.reuseIdentifier, for: indexPath) as! RoomCell
         guard let roomInfo = roomViewModel.roomsInformation, indexPath.row < roomInfo.count else { return cell}
         cell.configure(roomInfo[indexPath.row])
+        cell.nextButton.addTarget(self, action: #selector(goToNextScreen), for: .touchUpInside)
         return cell
     }
     
@@ -76,6 +77,11 @@ extension RoomViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+    }
+    
+    @objc func goToNextScreen() {
+        let nextScreen = BookingViewController(view: BookingView(), viewModel: BookingViewModel())
+        navigationController?.pushViewController(nextScreen, animated: true)
     }
 }
 

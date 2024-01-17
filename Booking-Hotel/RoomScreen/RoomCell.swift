@@ -48,9 +48,9 @@ class RoomCell: UICollectionViewCell {
     }()
 
     lazy var moreInfoButton: CustomColoredButton = {
-        let button = CustomColoredButton(frame: .zero, color: .blue, rightSideImage: true)
-        button.setTitle("Подробнее о номере", for: .normal)
-        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        let button = CustomColoredButton(frame: .zero, color: .blue, rightSideImage: true, title: "Подробнее о номере")
+        button.setImage(UIImage(systemName: "chevron.right",
+                                withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)), for: .normal)
         return button
     }()
     
@@ -75,11 +75,6 @@ class RoomCell: UICollectionViewCell {
     
     private func setupUI() {
         scrollView.delegate = self
-        
-        tagsView.tagNames = ["Все включено","Кондиционер"]
-        
-        priceLabel.attributedText = setMutableAttributedText(186600, "за 7 ночей с перелётом")
-        
         contentView.addSubview(scrollView)
         contentView.addSubview(pageControl)
         contentView.addSubview(nameLabel)
@@ -130,6 +125,10 @@ class RoomCell: UICollectionViewCell {
     func configure(_ info: Room) {
         pageControl.numberOfPages = info.imageUrls.count
         addImages(images: info.imageUrls)
+        nameLabel.text = info.name
+        tagsView.tagNames = info.peculiarities
+        priceLabel.attributedText = setMutableAttributedText(info.price, info.pricePer)
+        
     }
     
     

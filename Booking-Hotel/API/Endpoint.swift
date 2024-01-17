@@ -11,6 +11,7 @@ enum Endpoint {
     
     case getHotel(url: String = "/v3/d144777c-a67f-4e35-867a-cacc3b827473")
     case getRooms(url: String = "/v3/8b532701-709e-4194-a41c-1a903af00195")
+    case getBookingInfo(url: String = "/v3/63866c74-d593-432c-af8e-f279d1a8d2ff")
     
     var request: URLRequest? {
         guard let url = self.url else { return nil }
@@ -31,14 +32,14 @@ enum Endpoint {
     
     private var path: String {
         switch self {
-        case .getHotel(let url), .getRooms(let url):
+        case .getHotel(let url), .getRooms(let url), .getBookingInfo(let url):
             return url
         }
     }
     
     private var httpMethod: String {
         switch self {
-        case .getHotel, .getRooms:
+        case .getHotel, .getRooms, .getBookingInfo:
             return HTTP.Method.get.rawValue
         }
     }
@@ -47,7 +48,7 @@ enum Endpoint {
 extension URLRequest {
     mutating func addValues(for endpoint: Endpoint) {
         switch endpoint {
-        case .getHotel, .getRooms:
+        case .getHotel, .getRooms, .getBookingInfo:
             let cookies =  URLSession.shared.configuration.httpCookieStorage?.cookies ?? [HTTPCookie()]
             self.setValue(HTTP.Headers.Value.applicationJson.rawValue, forHTTPHeaderField: HTTP.Headers.Key.contentType.rawValue)
             self.setValue(HTTP.Headers.Value.applicationJson.rawValue, forHTTPHeaderField: HTTP.Headers.Key.accept.rawValue)

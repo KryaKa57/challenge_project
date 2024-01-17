@@ -42,7 +42,7 @@ class RoomView: UIView {
         
         collectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Constant.systemHeight * 0.1)
-            make.leading.width.height.equalToSuperview()
+            make.leading.width.bottom.equalToSuperview()
         }
     }
 }
