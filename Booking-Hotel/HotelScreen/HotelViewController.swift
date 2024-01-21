@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 class HotelViewController: UIViewController {
-    let hotelView: HotelView
-    let hotelViewModel: HotelViewModel
+    private let hotelView = HotelView()
+    private let hotelViewModel: HotelViewModel
+    var coordinator: HotelCoordinator?
 
-    
     override func loadView() {
         view = hotelView
     }
@@ -21,14 +21,12 @@ class HotelViewController: UIViewController {
         super.viewDidLoad()
         title = "Отель"
         
-        hotelViewModel.getInfo()
         addDelegates()
         addTarget()
     }
     
-    init(view: HotelView, viewModel: HotelViewModel) {
+    init(viewModel: HotelViewModel) {
         hotelViewModel = viewModel
-        hotelView = view
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,8 +46,7 @@ class HotelViewController: UIViewController {
     }
     
     @objc func goToNextScreen() {
-        guard let hotelName = hotelView.nameLabel.text else { return }
-        navigationController?.pushViewController(RoomViewController(view: RoomView(), viewModel: RoomViewModel(), hotelName: hotelName), animated: true)
+        coordinator?.toRoomScreen()
     }
 }
 

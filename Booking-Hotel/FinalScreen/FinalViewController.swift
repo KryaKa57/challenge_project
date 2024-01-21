@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class FinalViewController: UIViewController {
-    let finalView: FinalView
+    var coordinator: FinalCoordinator?
+    
+    let finalView = FinalView()
     let navigationManager = NavigationManager()
 
     override func loadView() {
@@ -24,8 +26,7 @@ class FinalViewController: UIViewController {
         finalView.nextButton.addTarget(self, action: #selector(goBackToFirstScreen), for: .touchUpInside)
     }
     
-    init(view: FinalView) {
-        finalView = view
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,16 +39,12 @@ class FinalViewController: UIViewController {
     }
     
     @objc func goBackToFirstScreen() {
-        if let navigationController = self.navigationController {
-            if let hotelViewController = navigationController.viewControllers.first(where: { $0 is HotelViewController }) {
-                navigationController.popToViewController(hotelViewController, animated: true)
-            }
-        }
+        coordinator?.popToRootViewController()
     }
 }
 
 extension FinalViewController: NavigationManagerDelegate {
     func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        coordinator?.popViewController()
     }
 }

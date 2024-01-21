@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class BookingViewController: UIViewController {
-    let bookingView: BookingView
+    var coordinator: BookingCoordinator?
+    
+    let bookingView = BookingView()
     let bookingViewModel: BookingViewModel
     let navigationManager = NavigationManager()
 
@@ -21,13 +23,11 @@ class BookingViewController: UIViewController {
         super.viewDidLoad()
         
         setNavigation()
-        bookingViewModel.getInfo()
         addDelegates()
     }
     
-    init(view: BookingView, viewModel: BookingViewModel) {
+    init(viewModel: BookingViewModel) {
         bookingViewModel = viewModel
-        bookingView = view
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -55,7 +55,7 @@ class BookingViewController: UIViewController {
     
     @objc func checkFields() {
         if !isAnyTextFieldEmpty(in: bookingView.allTouristStackView) {
-            navigationController?.pushViewController(FinalViewController(view: FinalView()), animated: true)
+            coordinator?.toFinalScreen()
         }
     }
     
@@ -64,6 +64,7 @@ class BookingViewController: UIViewController {
         let newTourist = TouristStackView(textValue: "\(bookingViewModel.numberOfTourist.toString()) турист")
         bookingView.allTouristStackView.addArrangedSubview(newTourist)
         bookingView.layoutIfNeeded()
+        
         newTourist.toggleDropdown()
         bookingView.layoutIfNeeded()
     }
@@ -113,7 +114,7 @@ extension BookingViewController: APIRequestDelegate {
 
 extension BookingViewController: NavigationManagerDelegate {
     func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        coordinator?.popViewController()
     }
 }
 
@@ -130,7 +131,6 @@ extension BookingViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(leftText: leftText, rightText: rightText)
         if tableView == bookingView.bookingPriceTableView {
             cell.distanceItems()
-            
             if indexPath.row == bookingViewModel.bookingPriceBlocks.count - 1 {
                 cell.rightTextLabel.textColor = UIColor(rgb: 0x0D72FF)
                 cell.rightTextLabel.font = UIFont(name: "SFProDisplay-Bold", size: 16)

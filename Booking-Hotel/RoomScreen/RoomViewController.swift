@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class RoomViewController: UIViewController {
-    let roomView: RoomView
+    var coordinator: RoomCoordinator?
+    
+    let roomView = RoomView()
     let roomViewModel: RoomViewModel
     let navigationManager = NavigationManager()
 
@@ -21,14 +23,11 @@ class RoomViewController: UIViewController {
         super.viewDidLoad()
         
         setNavigation()
-        roomViewModel.getInfo()
         addDelegates()
     }
     
-    init(view: RoomView, viewModel: RoomViewModel, hotelName: String) {
+    init(viewModel: RoomViewModel) {
         roomViewModel = viewModel
-        roomViewModel.title = hotelName
-        roomView = view
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -80,14 +79,13 @@ extension RoomViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     @objc func goToNextScreen() {
-        let nextScreen = BookingViewController(view: BookingView(), viewModel: BookingViewModel())
-        navigationController?.pushViewController(nextScreen, animated: true)
+        coordinator?.toBookingScreen()
     }
 }
 
 extension RoomViewController: NavigationManagerDelegate {
     func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        coordinator?.popViewController()
     }
 }
 

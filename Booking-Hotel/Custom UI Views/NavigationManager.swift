@@ -19,6 +19,7 @@ class NavigationManager {
     
     func setupNavigationBar(_ vc: UIViewController, title: String = "",
                             hasLeftItem: Bool = false) {
+        
         vc.navigationItem.setHidesBackButton(true, animated: true)
         if title != "" {
             vc.navigationItem.title = title
@@ -46,5 +47,4 @@ class NavigationManager {
     @objc func leftButtonTapped() {
         delegate?.backButtonTapped()
     }
-    
 }
