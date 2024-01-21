@@ -72,7 +72,6 @@ extension HotelViewController: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MoreInfoCell.reuseIdentifier, for: indexPath) as! MoreInfoCell
-        cell.isUserInteractionEnabled = false
         cell.configure(hotelViewModel.moreInformation[indexPath.row])
         if indexPath.row == 2 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0)

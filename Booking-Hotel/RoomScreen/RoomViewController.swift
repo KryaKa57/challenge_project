@@ -63,7 +63,7 @@ extension RoomViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomCell.reuseIdentifier, for: indexPath) as! RoomCell
-        guard let roomInfo = roomViewModel.roomsInformation, indexPath.row < roomInfo.count else { return cell}
+        guard let roomInfo = roomViewModel.roomsInformation, indexPath.row < roomInfo.count else { return cell }
         cell.configure(roomInfo[indexPath.row])
         cell.nextButton.addTarget(self, action: #selector(goToNextScreen), for: .touchUpInside)
         return cell

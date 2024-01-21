@@ -45,4 +45,49 @@ class BookingViewModel {
         bookingPriceBlocks.append(TableData(title: "К оплате", description: (info.serviceCharge + info.fuelCharge + info.tourPrice).getPrice()))
     }
     
+    func format(phone: String) -> String {
+        var mask = "(***) ***-**-**"
+        var result = "+7 "
+        
+        let charactersToRemove: Set<Character> = ["(", ")", "*", "-", " "]
+        var newString = phone.count > 2 ? String(String(phone.dropFirst(2)).filter{!charactersToRemove.contains($0)}) : phone
+
+        if (phone.count == mask.count + 2) {
+            newString = String(newString.dropLast())
+        }
+        
+        let numbers = newString.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+        var index = numbers.startIndex
+        
+        for ch in mask where index < numbers.endIndex {
+            if ch == "*" {
+                result.append(numbers[index])
+                index = numbers.index(after: index)
+            } else {
+                result.append(ch)
+            }
+        }
+        
+        mask = String(mask.dropFirst(result.count - 3))
+        return result + mask
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
+    func getPriceTexts(_ row: Int) -> (String, String) {
+        let leftText = bookingPriceBlocks[row].title
+        let rightText = bookingPriceBlocks[row].description
+        return (leftText, rightText)
+    }
+    
+    func getInfoTexts(_ row: Int) -> (String, String) {
+        let leftText = bookingInfoBlocks[row].title
+        let rightText = bookingInfoBlocks[row].description
+        return (leftText, rightText)
+    }
 }

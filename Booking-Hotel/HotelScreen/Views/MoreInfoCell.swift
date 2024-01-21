@@ -59,6 +59,7 @@ class MoreInfoCell: UITableViewCell {
     }
     
     func configure(_ info: MoreInformation) {
+        isUserInteractionEnabled = false
         leftIconImageView.image = UIImage(named: info.imageName)
         titleLabel.text = info.title
     }

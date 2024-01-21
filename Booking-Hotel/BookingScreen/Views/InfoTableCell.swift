@@ -65,4 +65,9 @@ class InfoTableCell: UITableViewCell {
     func distanceItems() {
         rightTextLabel.textAlignment = .right
     }
+    
+    func colorBlue() {
+        rightTextLabel.textColor = UIColor(rgb: 0x0D72FF)
+        rightTextLabel.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+    }
 }

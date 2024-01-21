@@ -214,12 +214,6 @@ class BookingView: UIView {
     private func initialize() {
         backgroundColor = .white
         
-        let attributes: [NSAttributedString.Key: Any] = [ .font: Constant.defaultFont ]
-        let attributedText = NSAttributedString(string: "\(5) Превосходно", attributes: attributes)
-        ratingButton.setAttributedTitle(attributedText, for: .normal)
-        nameLabel.text = "Steigenberger Makadi"
-        adressLabel.text = "Madinat Makadi, Safaga Road, Makadi Bay, Египет"
-        
         mainInfoStackView.addArrangedSubview(ratingButton)
         mainInfoStackView.addArrangedSubview(nameLabel)
         mainInfoStackView.addArrangedSubview(adressLabel)
@@ -291,5 +285,9 @@ class BookingView: UIView {
             make.width.equalToSuperview().offset(-32)
             make.height.equalTo(50)
         }
+    }
+    
+    func isPhoneNumberFilled() -> Bool {
+        return (phoneNumberTextField.text?.isEmpty ?? false) || !(phoneNumberTextField.text?.contains("*") ?? false)
     }
 }

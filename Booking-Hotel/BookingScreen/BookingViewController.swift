@@ -72,29 +72,23 @@ class BookingViewController: UIViewController {
     func isAnyTextFieldEmpty(in stackView: UIStackView) -> Bool {
         var hasEmptyTextField = false
 
-        for subview in stackView.subviews {
-            if let textField = subview as? UITextField {
-                textField.delegate = self
-                if textField.text?.isEmpty ?? true {
-                    hasEmptyTextField = true
-                    textField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
-                }
-            } else if let nestedStackView = subview as? UIStackView {
-                if isAnyTextFieldEmpty(in: nestedStackView) {
-                    hasEmptyTextField = true
-                }
+        let textFields = stackView.getAllTextFields()
+        for textField in textFields {
+            textField.delegate = self
+            if textField.text?.isEmpty ?? true {
+                hasEmptyTextField = true
+                textField.colorError()
             }
         }
         
-        if (bookingView.phoneNumberTextField.text?.isEmpty ?? true)
-                || (bookingView.phoneNumberTextField.text?.contains("*") != false) {
+        if (bookingView.isPhoneNumberFilled()) {
             hasEmptyTextField = true
-            bookingView.phoneNumberTextField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
+            bookingView.phoneNumberTextField.colorError()
         }
         
-        if !isValidEmail(bookingView.emailTextField.text ?? "") {
+        if !bookingViewModel.isValidEmail(bookingView.emailTextField.text ?? "") {
             hasEmptyTextField = true
-            bookingView.emailTextField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
+            bookingView.emailTextField.colorError()
         }
         
         return hasEmptyTextField
@@ -124,19 +118,30 @@ extension BookingViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let block = (tableView == bookingView.bookingInfoTableView) ? bookingViewModel.bookingInfoBlocks : bookingViewModel.bookingPriceBlocks
         let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableCell.reuseIdentifier, for: indexPath) as! InfoTableCell
-        let leftText = block[indexPath.row].title
-        let rightText = block[indexPath.row].description
-        cell.configure(leftText: leftText, rightText: rightText)
+            
         if tableView == bookingView.bookingPriceTableView {
-            cell.distanceItems()
-            if indexPath.row == bookingViewModel.bookingPriceBlocks.count - 1 {
-                cell.rightTextLabel.textColor = UIColor(rgb: 0x0D72FF)
-                cell.rightTextLabel.font = UIFont(name: "SFProDisplay-Bold", size: 16)
-            }
+            configurePriceCell(cell, forRowAt: indexPath)
+        } else {
+            configureInfoCell(cell, forRowAt: indexPath)
         }
+            
         return cell
+    }
+    
+    func configurePriceCell(_ cell: InfoTableCell, forRowAt indexPath: IndexPath) {
+        let (leftText, rightText) = bookingViewModel.getPriceTexts(indexPath.row)
+        cell.configure(leftText: leftText, rightText: rightText)
+        cell.distanceItems()
+        
+        if indexPath.row == bookingViewModel.bookingPriceBlocks.count - 1 {
+            cell.colorBlue()
+        }
+    }
+
+    func configureInfoCell(_ cell: InfoTableCell, forRowAt indexPath: IndexPath) {
+        let (leftText, rightText) = bookingViewModel.getInfoTexts(indexPath.row)
+        cell.configure(leftText: leftText, rightText: rightText)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -151,58 +156,20 @@ extension BookingViewController: UITextFieldDelegate {
         
         if textField == bookingView.phoneNumberTextField {
             let newString = (text as NSString).replacingCharacters(in: range, with: string)
-            textField.text = format(phone: newString)
-        } else {
-            return true
+            textField.text = bookingViewModel.format(phone: newString)
+            return false
         }
         
-        return false
+        return true
     }
-    
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.backgroundColor = UIColor(rgb: 0xF8F8F8)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == bookingView.emailTextField {
-            if !isValidEmail(textField.text ?? "") {
-                bookingView.emailTextField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
-            }
+        if textField == bookingView.emailTextField && !bookingViewModel.isValidEmail(textField.text ?? "") {
+            bookingView.emailTextField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
         }
-    }
-    
-    func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email)
-    }
-    
-    func format(phone: String) -> String {
-        var mask = "(***) ***-**-**"
-        var result = "+7 "
-        
-        let charactersToRemove: Set<Character> = ["(", ")", "*", "-", " "]
-        var newString = String(String(phone.dropFirst(2)).filter{!charactersToRemove.contains($0)})
-
-        if (phone.count == mask.count + 2) {
-            newString = String(newString.dropLast())
-        }
-        
-        let numbers = newString.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
-        var index = numbers.startIndex
-        
-        for ch in mask where index < numbers.endIndex {
-            if ch == "*" {
-                result.append(numbers[index])
-                index = numbers.index(after: index)
-            } else {
-                result.append(ch)
-            }
-        }
-        
-        mask = String(mask.dropFirst(result.count - 3))
-        return result + mask
     }
 }
