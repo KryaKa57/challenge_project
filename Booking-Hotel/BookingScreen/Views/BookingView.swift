@@ -15,7 +15,7 @@ class BookingView: UIView {
     lazy var mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.bounces = true
-        scrollView.backgroundColor = UIColor(rgb: 0xF6F6F9)
+        scrollView.backgroundColor = Color.background().getUIColor()
         return scrollView
     }()
     
@@ -34,10 +34,11 @@ class BookingView: UIView {
     
     lazy var ratingButton: PaddedButton = {
         let button = PaddedButton(padding: CGSize(width: 20, height: 10))
-        button.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        button.setTitleColor(UIColor(rgb: 0xFFA800), for: .normal)
-        button.tintColor = UIColor(rgb: 0xFFA800)
-        button.backgroundColor = UIColor(rgb: 0xFFC700, alpha: 0.2)
+        let color = Color.yellow()
+        button.setImage(UIImage(systemName: TextConstants.starIcon), for: .normal)
+        button.setTitleColor(color.getUIColor(), for: .normal)
+        button.tintColor = color.getUIColor()
+        button.backgroundColor = Color.brightYellow().getUIColor()
         button.layer.cornerRadius = 5
         button.isEnabled = false
         return button
@@ -48,15 +49,15 @@ class BookingView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.numberOfLines = 0
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 22)
+        label.font = FontConstant.medium().getUIFont(size: 22)
         return label
     }()
     
     lazy var adressLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(rgb: 0x0D72FF)
+        label.textColor = Color.blue().getUIColor()
         label.numberOfLines = 0
-        label.font = UIFont(name: "SFProDisplay-Regular", size: 14)
+        label.font = FontConstant.regular().getUIFont(size: 14)
         return label
     }()
     
@@ -81,30 +82,30 @@ class BookingView: UIView {
     
     lazy var customerInfoLabel: UILabel = {
         let label = UILabel()
-        label.text = "Информация о покупателе"
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 22)
+        label.text = TextConstants.infoAboutTourist 
+        label.font = FontConstant.medium().getUIFont(size: 22)
         label.textColor = .black
         return label
     }()
     
     lazy var phoneNumberTextField: JVFloatLabeledTextField = {
         let textField = JVFloatLabeledTextField()
-        textField.setup(placholderText: "Номер телефона")
+        textField.setup(placholderText: TextConstants.phoneNumberPlaceholderText)
         textField.keyboardType = .numberPad
         return textField
     }()
     
     lazy var emailTextField: JVFloatLabeledTextField = {
         let textField = JVFloatLabeledTextField()
-        textField.setup(placholderText: "Почта")
+        textField.setup(placholderText: TextConstants.emailPlaceholderText)
         return textField
     }()
     
     lazy var additionalInfoLabel: UILabel = {
         let label = UILabel()
-        label.text = "Эти данные никому не передаются. После оплаты мы вышли чек на указанный вами номер и почту"
-        label.font = UIFont(name: "SFProDisplay-Regular", size: 14)
-        label.textColor = UIColor(rgb: 0x828796)
+        label.text = TextConstants.additionalInfoText
+        label.font = FontConstant.regular().getUIFont(size: 14)
+        label.textColor = Color.gray().getUIColor()
         label.numberOfLines = 0
         return label
     }()
@@ -118,7 +119,7 @@ class BookingView: UIView {
     }()
     
     lazy var firstTouristStackView: TouristStackView = {
-        let stack = TouristStackView(textValue: "Первый турист")
+        let stack = TouristStackView(textValue: TextConstants.firstTitleText)
         return stack
     }()
     
@@ -137,18 +138,18 @@ class BookingView: UIView {
     
     lazy var addTouristLabel: UILabel = {
         let label = UILabel()
-        label.text = "Добавить туриста"
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 22)
+        label.text = TextConstants.addTouristLabelText
+        label.font = FontConstant.medium().getUIFont(size: 22)
         label.textColor = .black
         return label
     }()
     
     lazy var addButton: PaddedButton = {
         let button = PaddedButton(padding: CGSize(width: 0, height: 10))
-        let color = Color.blue
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        let color = Color.blue()
+        button.setImage(UIImage(systemName: TextConstants.plusIcon), for: .normal)
         button.tintColor = .white
-        button.backgroundColor = color.getTitleColor()
+        button.backgroundColor = color.getUIColor()
         button.layer.cornerRadius = 8
         return button
     }()
@@ -168,7 +169,7 @@ class BookingView: UIView {
     }()
     
     lazy var nextButton: UIButton = {
-        let button = CustomButton(textValue: "К выбору номера")
+        let button = CustomButton(textValue: TextConstants.thirdNextButtonText)
         return button
     }()
     
@@ -185,23 +186,21 @@ class BookingView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        let borderLayer = CALayer()
-        borderLayer.backgroundColor = UIColor(rgb: 0xE8E9EC).cgColor
-        borderLayer.frame = CGRect(x: 0, y: 0, width: bottomView.bounds.size.width, height: 1)
+        let borderLayer = CustomBorderLayer(width: bottomView.bounds.size.width)
         bottomView.layer.addSublayer(borderLayer)
     }
     
     func configure(_ info: Booking) {
-        //nameLabel.text = info.hotelName
-        nameLabel.text = "Steigenberger Makadi"
+        nameLabel.text = info.hotelName
+        //nameLabel.text = "Steigenberger Makadi"
         adressLabel.text = info.hotelAdress
-        let attributes: [NSAttributedString.Key: Any] = [ .font: Constant.defaultFont ]
+        let attributes: [NSAttributedString.Key: Any] = [ .font: FontConstant.regular().getUIFont() ]
         let attributedText = NSAttributedString(string: "\(info.horating) \(info.ratingName)", attributes: attributes)
         ratingButton.setAttributedTitle(attributedText, for: .normal)
         
@@ -287,6 +286,7 @@ class BookingView: UIView {
     }
     
     func isPhoneNumberFilled() -> Bool {
-        return (phoneNumberTextField.text?.isEmpty ?? false) || !(phoneNumberTextField.text?.contains("*") ?? false)
+        return !(phoneNumberTextField.text?.isEmpty ?? true)
+                || !(phoneNumberTextField.text?.contains("*") ?? true)
     }
 }

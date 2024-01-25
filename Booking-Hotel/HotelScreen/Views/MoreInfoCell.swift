@@ -15,7 +15,6 @@ class MoreInfoCell: UITableViewCell {
     
     lazy var leftIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "emoji-happy")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -28,21 +27,20 @@ class MoreInfoCell: UITableViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Удобства"
         label.textColor = .black
         return label
     }()
     
     lazy var detailLabel: UILabel = {
         let label = UILabel()
-        label.text = "Самое необходимое"
-        label.textColor = UIColor(rgb: 0x828796)
+        label.text = TextConstants.allNecessary
+        label.textColor = Color.gray().getUIColor()
         return label
     }()
     
     lazy var rightIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
+        imageView.image = UIImage(systemName: TextConstants.chevronRightIcon)
         imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -65,7 +63,7 @@ class MoreInfoCell: UITableViewCell {
     }
     
     private func setupViews() {
-        backgroundColor = UIColor(rgb: 0xFBFBFC)
+        backgroundColor = Color.lightGray().getUIColor()
         addSubview(leftIconImageView)
         titleStackView.addArrangedSubview(titleLabel)
         titleStackView.addArrangedSubview(detailLabel)

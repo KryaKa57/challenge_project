@@ -16,7 +16,7 @@ class RoomView: UIView {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(RoomCell.self, forCellWithReuseIdentifier: RoomCell.reuseIdentifier)
-        collectionView.backgroundColor = UIColor(rgb: 0xF6F6F9)
+        collectionView.backgroundColor = Color.background().getUIColor()
         return collectionView
     }()
     
@@ -26,7 +26,7 @@ class RoomView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     override func layoutSubviews() {

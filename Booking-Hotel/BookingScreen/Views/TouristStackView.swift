@@ -19,18 +19,18 @@ class TouristStackView: CustomStackView {
     
     lazy var numberTouristLabel: UILabel = {
         let label = UILabel()
-        label.text = "Первый турист"
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 22)
+        label.text = TextConstants.firstTouristText
+        label.font = FontConstant.medium().getUIFont(size: 22)
         label.textColor = .black
         return label
     }()
     
     lazy var toggleButton: PaddedButton = {
         let button = PaddedButton(padding: CGSize(width: 10, height: 0))
-        let color = Color.blue
-        button.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-        button.tintColor = color.getTitleColor()
-        button.backgroundColor = color.getBackgroundColor()
+        let color = Color.blue()
+        button.setImage(UIImage(systemName: TextConstants.chevronUpIcon), for: .normal)
+        button.tintColor = color.getUIColor()
+        button.backgroundColor = color.getUIColor(opacity: 0.1)
         button.layer.cornerRadius = 8
         return button
     }()
@@ -47,11 +47,11 @@ class TouristStackView: CustomStackView {
     }
         
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     required init() {
-        fatalError("init() has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     private func setup() {
@@ -77,7 +77,7 @@ class TouristStackView: CustomStackView {
     @objc func toggleDropdown() {
         UIView.animate(withDuration: 0.3) {
             self.dropdownStackView.isHidden = !self.dropdownStackView.isHidden
-            let image = UIImage(systemName: (self.dropdownStackView.isHidden ? "chevron.down" : "chevron.up"))
+            let image = UIImage(systemName: (self.dropdownStackView.isHidden ? TextConstants.chevronDownIcon : TextConstants.chevronUpIcon))
             self.toggleButton.setImage(image, for: .normal)
             self.layoutIfNeeded()
         }

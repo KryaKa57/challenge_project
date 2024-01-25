@@ -18,7 +18,7 @@ class InfoTableCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .gray
         label.numberOfLines = 0
-        label.font = Constant.defaultFont
+        label.font = FontConstant.regular().getUIFont()
         return label
     }()
     
@@ -26,7 +26,7 @@ class InfoTableCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.numberOfLines = 0
-        label.font = Constant.defaultFont
+        label.font = FontConstant.regular().getUIFont()
         return label
     }()
     
@@ -40,7 +40,7 @@ class InfoTableCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     private func setupConstraints() {
@@ -67,7 +67,7 @@ class InfoTableCell: UITableViewCell {
     }
     
     func colorBlue() {
-        rightTextLabel.textColor = UIColor(rgb: 0x0D72FF)
-        rightTextLabel.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+        rightTextLabel.textColor = Color.blue().getUIColor()
+        rightTextLabel.font = FontConstant.bold().getUIFont()
     }
 }

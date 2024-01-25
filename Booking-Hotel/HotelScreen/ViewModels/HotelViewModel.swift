@@ -15,9 +15,9 @@ class HotelViewModel {
     
     var hotelInformation: Hotel?
     var delegate: APIRequestDelegate?
-    let moreInformation = [MoreInformation(title: "Удобства", imageName: "emoji-happy"),
-                           MoreInformation(title: "Что включено", imageName: "tick-square"),
-                           MoreInformation(title: "Что не включено", imageName: "close-square")]
+    let moreInformation = [MoreInformation(title: TextConstants.moreInfoFirstTitle, imageName: TextConstants.moreInfoFirstIcon),
+                           MoreInformation(title: TextConstants.moreInfoSecondTitle, imageName: TextConstants.moreInfoSecondIcon),
+                           MoreInformation(title: TextConstants.moreInfoThirdTitle, imageName: TextConstants.moreInfoThirdIcon)]
     
     func getInfo() {
         let endpoint = Endpoint.getHotel()

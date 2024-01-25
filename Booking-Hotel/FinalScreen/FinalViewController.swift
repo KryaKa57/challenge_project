@@ -31,11 +31,11 @@ class FinalViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     func setNavigation() {
-        navigationManager.setupNavigationBar(self, title: "Заказ оплачен", hasLeftItem: true)
+        navigationManager.setupNavigationBar(self, title: TextConstants.orderPaidText, hasLeftItem: true)
     }
     
     @objc func goBackToFirstScreen() {

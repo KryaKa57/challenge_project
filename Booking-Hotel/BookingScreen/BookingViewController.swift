@@ -33,7 +33,7 @@ class BookingViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     func addDelegates() {
@@ -51,7 +51,7 @@ class BookingViewController: UIViewController {
     }
     
     func setNavigation() {
-        navigationManager.setupNavigationBar(self, title: "Бронирование", hasLeftItem: true)
+        navigationManager.setupNavigationBar(self, title: TextConstants.secondTitleText, hasLeftItem: true)
     }
     
     @objc func checkFields() {
@@ -62,7 +62,7 @@ class BookingViewController: UIViewController {
     
     @objc func addNewTourist() {
         bookingViewModel.numberOfTourist += 1
-        let newTourist = TouristStackView(textValue: "\(bookingViewModel.numberOfTourist.toString()) турист")
+        let newTourist = TouristStackView(textValue: "\(bookingViewModel.numberOfTourist.toString())")
         bookingView.allTouristStackView.addArrangedSubview(newTourist)
         bookingView.layoutIfNeeded()
         
@@ -82,7 +82,7 @@ class BookingViewController: UIViewController {
             }
         }
         
-        if (bookingView.isPhoneNumberFilled()) {
+        if !bookingView.isPhoneNumberFilled() {
             hasEmptyTextField = true
             bookingView.phoneNumberTextField.colorError()
         }
@@ -99,14 +99,10 @@ class BookingViewController: UIViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(dismissMyKeyboard))
-            
-        //Add this tap gesture recognizer to the parent view
         view.addGestureRecognizer(tap)
     }
         
     @objc func dismissMyKeyboard(){
-        //endEditing causes the view (or one of its embedded text fields) to resign the first responder status.
-        //In short- Dismiss the active keyboard.
         view.endEditing(true)
     }
 }
@@ -180,12 +176,12 @@ extension BookingViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.backgroundColor = UIColor(rgb: 0xF8F8F8)
+        textField.backgroundColor = Color.background().getUIColor()
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == bookingView.emailTextField && !bookingViewModel.isValidEmail(textField.text ?? "") {
-            bookingView.emailTextField.backgroundColor = UIColor(rgb: 0xEB5757, alpha: 0.15)
+            bookingView.emailTextField.backgroundColor = Color.error().getUIColor()
         }
     }
 }

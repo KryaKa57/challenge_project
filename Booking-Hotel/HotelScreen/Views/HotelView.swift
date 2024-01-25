@@ -14,7 +14,7 @@ class HotelView: UIView {
     lazy var mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.bounces = true
-        scrollView.backgroundColor = UIColor(rgb: 0xF6F6F9)
+        scrollView.backgroundColor = Color.background().getUIColor()
         return scrollView
     }()
     
@@ -48,12 +48,12 @@ class HotelView: UIView {
     
     lazy var ratingButton: PaddedButton = {
         let button = PaddedButton(padding: CGSize(width: 20, height: 10))
-        button.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        button.setTitleColor(UIColor(rgb: 0xFFA800), for: .normal)
-        button.tintColor = UIColor(rgb: 0xFFA800)
-        button.backgroundColor = UIColor(rgb: 0xFFC700, alpha: 0.2)
+        let color = Color.yellow()
+        button.setImage(UIImage(systemName: TextConstants.starIcon), for: .normal)
+        button.setTitleColor(color.getUIColor(), for: .normal)
+        button.tintColor = color.getUIColor()
+        button.backgroundColor = Color.brightYellow().getUIColor()
         button.layer.cornerRadius = 5
-        //button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         button.isEnabled = false
         return button
     }()
@@ -62,15 +62,15 @@ class HotelView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.numberOfLines = 0
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 22)
+        label.font = FontConstant.medium().getUIFont(size: 22)
         return label
     }()
     
     lazy var adressLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(rgb: 0x0D72FF)
+        label.textColor = Color.blue().getUIColor()
         label.numberOfLines = 0
-        label.font = UIFont(name: "SFProDisplay-Regular", size: 14)
+        label.font = FontConstant.regular().getUIFont(size: 14)
         return label
     }()
     
@@ -93,9 +93,9 @@ class HotelView: UIView {
     
     lazy var aboutLabel: UILabel = {
         let label = UILabel()
-        label.text = "Об отеле"
+        label.text = TextConstants.aboutHotel
         label.textColor = .black
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 22)
+        label.font = FontConstant.medium().getUIFont(size: 22)
         return label
     }()
     
@@ -108,7 +108,7 @@ class HotelView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.numberOfLines = 0
-        label.font = Constant.defaultFont
+        label.font = FontConstant.regular().getUIFont()
         return label
     }()
     
@@ -121,7 +121,7 @@ class HotelView: UIView {
     }()
     
     lazy var nextButton: UIButton = {
-        let button = CustomButton(textValue: "К выбору номера")
+        let button = CustomButton(textValue: TextConstants.firstNextButtonText)
         return button
     }()
     
@@ -138,15 +138,13 @@ class HotelView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        let borderLayer = CALayer()
-        borderLayer.backgroundColor = UIColor(rgb: 0xE8E9EC).cgColor
-        borderLayer.frame = CGRect(x: 0, y: 0, width: bottomView.bounds.size.width, height: 1)
+        let borderLayer = CustomBorderLayer(width: bottomView.bounds.size.width)
         bottomView.layer.addSublayer(borderLayer)
     }
     
@@ -167,13 +165,13 @@ class HotelView: UIView {
     func configure(_ info: Hotel) {
         pageControl.numberOfPages = info.imageUrls.count
         addImages(images: info.imageUrls)
-        //nameLabel.text = info.name
-        nameLabel.text = "Steigenberger Makadi"
+        nameLabel.text = info.name
+        //nameLabel.text = "Steigenberger Makadi"
         adressLabel.text = info.adress
         tagsView.tagNames = info.aboutTheHotel.peculiarities
         descriptionLabel.text = info.aboutTheHotel.description
         priceLabel.attributedText = setMutableAttributedText(info.minimalPrice, info.priceForIt)
-        let attributes: [NSAttributedString.Key: Any] = [ .font: Constant.defaultFont ]
+        let attributes: [NSAttributedString.Key: Any] = [ .font: FontConstant.regular().getUIFont() ]
         let attributedText = NSAttributedString(string: "\(info.rating) \(info.ratingName)", attributes: attributes)
         ratingButton.setAttributedTitle(attributedText, for: .normal)
     }
@@ -188,11 +186,11 @@ class HotelView: UIView {
         let text = "От \(formattedString) ₽ \(forIt.lowercased())"
         let attributedString = NSMutableAttributedString(string: text)
         
-        attributedString.addAttribute(.font, value: UIFont(name: "SFProDisplay-Bold", size: 30)!, range: NSRange(location: 0, length: 6 + formattedString.count))
+        attributedString.addAttribute(.font, value: FontConstant.bold().getUIFont(size: 30), range: NSRange(location: 0, length: 6 + formattedString.count))
         attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: 13))
         
-        attributedString.addAttribute(.font, value: Constant.defaultFont, range: NSRange(location: 13, length: 18))
-        attributedString.addAttribute(.foregroundColor, value: UIColor(rgb: 0x828796), range: NSRange(location: 13, length: forIt.count))
+        attributedString.addAttribute(.font, value: FontConstant.regular().getUIFont(), range: NSRange(location: 13, length: 18))
+        attributedString.addAttribute(.foregroundColor, value: Color.gray().getUIColor(), range: NSRange(location: 13, length: forIt.count))
         return attributedString
     }
     

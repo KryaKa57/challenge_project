@@ -33,7 +33,7 @@ class RoomCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .black
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 22)
+        label.font = FontConstant.medium().getUIFont(size: 22)
         return label
     }()
     
@@ -43,7 +43,7 @@ class RoomCell: UICollectionViewCell {
     }()
 
     lazy var moreInfoButton: ButtonWithTrailingImage = {
-        let button = ButtonWithTrailingImage(frame: .zero, imageName: "chevron.right", rightSideImage: true, title: "Подробнее о номере  ")
+        let button = ButtonWithTrailingImage(frame: .zero, imageName: TextConstants.chevronRightIcon, rightSideImage: true, title: TextConstants.moreAboutHotel)
         return button
     }()
     
@@ -53,7 +53,7 @@ class RoomCell: UICollectionViewCell {
     }()
     
     lazy var nextButton: CustomButton = {
-        let button = CustomButton(textValue: "Выбрать номер")
+        let button = CustomButton(textValue: TextConstants.secondNextButtonText)
         return button
     }()
     
@@ -63,7 +63,7 @@ class RoomCell: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     private func setupUI() {
@@ -128,7 +128,7 @@ class RoomCell: UICollectionViewCell {
     func addImages(images: [String]) {
         for (index, imageUrl) in images.enumerated() {
             let imageView = UIImageView()
-            imageView.loadImage(from: imageUrl, defaultImage: UIImage(named: "defaultImage")) { result in
+            imageView.loadImage(from: imageUrl, defaultImage: UIImage(named: TextConstants.defaultImageText)) { result in
                 switch result {
                 case .success(_):
                     DispatchQueue.main.async {
@@ -136,7 +136,7 @@ class RoomCell: UICollectionViewCell {
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
-                        imageView.image = UIImage(named: "error")?.resize(targetSize: CGSize(width: 64, height: 64))
+                        imageView.image = UIImage(named: TextConstants.errorText)?.resize(targetSize: CGSize(width: 64, height: 64))
                         imageView.contentMode = .center
                     }
                     print(error.localizedDescription)
@@ -159,11 +159,11 @@ class RoomCell: UICollectionViewCell {
         let text = "\(formattedString) ₽ \(forIt.lowercased())"
         let attributedString = NSMutableAttributedString(string: text)
         
-        attributedString.addAttribute(.font, value: UIFont(name: "SFProDisplay-Bold", size: 30)!, range: NSRange(location: 0, length: formattedString.count + 2))
+        attributedString.addAttribute(.font, value: FontConstant.bold().getUIFont(size: 30), range: NSRange(location: 0, length: formattedString.count + 2))
         attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: formattedString.count + 2))
         
-        attributedString.addAttribute(.font, value: Constant.defaultFont, range: NSRange(location: formattedString.count + 2, length: forIt.count))
-        attributedString.addAttribute(.foregroundColor, value: UIColor(rgb: 0x828796), range: NSRange(location: formattedString.count + 2, length: forIt.count))
+        attributedString.addAttribute(.font, value: FontConstant.regular().getUIFont(), range: NSRange(location: formattedString.count + 2, length: forIt.count))
+        attributedString.addAttribute(.foregroundColor, value: Color.gray().getUIColor(), range: NSRange(location: formattedString.count + 2, length: forIt.count))
         return attributedString
     }
 }

@@ -19,7 +19,7 @@ class HotelViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Отель"
+        title = TextConstants.firstTitleText
         
         addDelegates()
         addTarget()
@@ -31,7 +31,7 @@ class HotelViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     func addDelegates() {

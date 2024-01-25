@@ -21,9 +21,9 @@ class FinalView: UIView {
     
     lazy var partyImageView: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(named: "party-popper")?.resize(targetSize: CGSize(width: 44, height: 44))
+        let image = UIImage(named: TextConstants.partyPopperIcon)?.resize(targetSize: CGSize(width: 44, height: 44))
         imageView.image = image
-        imageView.backgroundColor = UIColor(rgb: 0xF6F6F9)
+        imageView.backgroundColor = Color.background().getUIColor()
         imageView.layer.cornerRadius = 50
         imageView.contentMode = .center
         return imageView
@@ -31,25 +31,25 @@ class FinalView: UIView {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Ваш заказ принят в работу"
+        label.text = TextConstants.orderAcceptedText
         label.textColor = .black
         label.textAlignment = .center
-        label.font = UIFont(name: "SFProDisplay-Regular", size: 22)
+        label.font = FontConstant.regular().getUIFont(size: 22)
         return label
     }()
     
     lazy var additionalLabel: UILabel = {
         let label = UILabel()
-        label.text = "Подтверждение заказа №\(getRandomId()) может занять некоторое время (от 1 часа до суток). Как только мы получим ответ от туроператора, вам на почту придет уведомление."
-        label.textColor = UIColor(rgb: 0x828796)
+        label.text = TextConstants.additionalLabelText
+        label.textColor = Color.gray().getUIColor()
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = Constant.defaultFont
+        label.font = FontConstant.regular().getUIFont()
         return label
     }()
     
     lazy var nextButton: UIButton = {
-        let button = CustomButton(textValue: "Супер!")
+        let button = CustomButton(textValue: TextConstants.coolText)
         return button
     }()
     
@@ -65,21 +65,16 @@ class FinalView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        let borderLayer = CALayer()
-        borderLayer.backgroundColor = UIColor(rgb: 0xE8E9EC).cgColor
-        borderLayer.frame = CGRect(x: 0, y: 0, width: bottomView.bounds.size.width, height: 1)
+        let borderLayer = CustomBorderLayer(width: bottomView.bounds.size.width)
         bottomView.layer.addSublayer(borderLayer)
     }
     
-    func getRandomId() -> Int {
-        return Int(arc4random_uniform(900000) + 100000)
-    }
     
     private func initialize() {
         backgroundColor = .white
