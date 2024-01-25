@@ -116,6 +116,10 @@ extension BookingViewController: APIRequestDelegate {
             self.bookingView.bookingPriceTableView.reloadData()
         }
     }
+    
+    func onFailedRequest(errorMessage: String) {
+        PopupManager.showLoginFailurePopUp(on: self.view, message:  "\(TextConstants.failedRequestMessage).\(errorMessage)")
+    }
 }
 
 extension BookingViewController: NavigationManagerDelegate {

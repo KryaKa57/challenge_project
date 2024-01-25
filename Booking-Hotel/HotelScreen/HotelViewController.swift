@@ -64,6 +64,12 @@ extension HotelViewController: APIRequestDelegate {
             self.hotelView.configure(hotelInfo)
         }
     }
+    
+    func onFailedRequest(errorMessage: String) {
+        DispatchQueue.main.async {
+            PopupManager.showLoginFailurePopUp(on: self.view, message: "\(TextConstants.failedRequestMessage).\(errorMessage)")
+        }
+    }
 }
 
 extension HotelViewController: UITableViewDataSource, UITableViewDelegate {

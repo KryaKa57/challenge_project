@@ -9,6 +9,7 @@ import Foundation
 
 protocol APIRequestDelegate {
     func onSucceedRequest()
+    func onFailedRequest(errorMessage: String)
 }
 
 class HotelViewModel {
@@ -27,7 +28,7 @@ class HotelViewModel {
                 self?.hotelInformation = res
                 self?.delegate?.onSucceedRequest()
             case .failure(let err):
-                print(err.localizedDescription)
+                self?.delegate?.onFailedRequest(errorMessage: err.getErrorMessage())
             }
         }
     }

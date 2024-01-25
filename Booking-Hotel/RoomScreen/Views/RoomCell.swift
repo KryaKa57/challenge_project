@@ -128,10 +128,12 @@ class RoomCell: UICollectionViewCell {
     func addImages(images: [String]) {
         for (index, imageUrl) in images.enumerated() {
             let imageView = UIImageView()
-            imageView.loadImage(from: imageUrl, defaultImage: UIImage(named: TextConstants.defaultImageText)) { result in
+            
+            NetworkManager.loadImage(from: imageUrl) { result in
                 switch result {
-                case .success(_):
+                case .success(let res):
                     DispatchQueue.main.async {
+                        imageView.image = res
                         imageView.contentMode = .scaleAspectFill
                     }
                 case .failure(let error):

@@ -151,10 +151,26 @@ class HotelView: UIView {
     func addImages(images: [String]) {
         for (index, imageUrl) in images.enumerated() {
             let imageView = UIImageView()
-            imageView.loadImage(from: imageUrl)
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.frame = CGRect(x: scrollView.frame.width * CGFloat(index), y: 0, width: scrollView.frame.width, height: scrollView.frame.height)
+            
+            NetworkManager.loadImage(from: imageUrl) { result in
+                switch result {
+                case .success(let res):
+                    DispatchQueue.main.async {
+                        imageView.image = res
+                        imageView.contentMode = .scaleAspectFill
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        imageView.image = UIImage(named: TextConstants.errorText)?.resize(targetSize: CGSize(width: 64, height: 64))
+                        imageView.contentMode = .center
+                    }
+                    print(error.localizedDescription)
+                }
+            }
+            
             scrollView.addSubview(imageView)
         }
 

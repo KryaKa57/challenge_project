@@ -54,6 +54,10 @@ extension RoomViewController: APIRequestDelegate {
             self.roomView.collectionView.reloadData()
         }
     }
+    
+    func onFailedRequest(errorMessage: String) {
+        PopupManager.showLoginFailurePopUp(on: self.view, message:  "\(TextConstants.failedRequestMessage).\(errorMessage)")
+    }
 }
 
 extension RoomViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
