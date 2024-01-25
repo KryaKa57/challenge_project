@@ -24,6 +24,7 @@ class BookingViewController: UIViewController {
         
         setNavigation()
         addDelegates()
+        initializeHideKeyboard()
     }
     
     init(viewModel: BookingViewModel) {
@@ -93,6 +94,21 @@ class BookingViewController: UIViewController {
         
         return hasEmptyTextField
     }
+    
+    func initializeHideKeyboard(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissMyKeyboard))
+            
+        //Add this tap gesture recognizer to the parent view
+        view.addGestureRecognizer(tap)
+    }
+        
+    @objc func dismissMyKeyboard(){
+        //endEditing causes the view (or one of its embedded text fields) to resign the first responder status.
+        //In short- Dismiss the active keyboard.
+        view.endEditing(true)
+    }
 }
 
 extension BookingViewController: APIRequestDelegate {
@@ -153,10 +169,10 @@ extension BookingViewController: UITableViewDataSource, UITableViewDelegate {
 extension BookingViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
-        
+        let isFilled = !text.contains("*")
         if textField == bookingView.phoneNumberTextField {
             let newString = (text as NSString).replacingCharacters(in: range, with: string)
-            textField.text = bookingViewModel.format(phone: newString)
+            textField.text = bookingViewModel.format(phone: newString, isFilled: isFilled)
             return false
         }
         

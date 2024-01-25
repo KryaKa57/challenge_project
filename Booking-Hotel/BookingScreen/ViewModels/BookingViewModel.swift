@@ -45,14 +45,14 @@ class BookingViewModel {
         bookingPriceBlocks.append(TableData(title: "К оплате", description: (info.serviceCharge + info.fuelCharge + info.tourPrice).getPrice()))
     }
     
-    func format(phone: String) -> String {
+    func format(phone: String, isFilled: Bool) -> String {
         var mask = "(***) ***-**-**"
         var result = "+7 "
         
         let charactersToRemove: Set<Character> = ["(", ")", "*", "-", " "]
         var newString = phone.count > 2 ? String(String(phone.dropFirst(2)).filter{!charactersToRemove.contains($0)}) : phone
 
-        if (phone.count == mask.count + 2) {
+        if (phone.count == mask.count + 2) && !isFilled {
             newString = String(newString.dropLast())
         }
         
