@@ -24,18 +24,13 @@ class RoomCell: UICollectionViewCell {
         return scrollView
     }()
     
-    lazy var pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        pageControl.layer.cornerRadius = 8
-        pageControl.backgroundColor = .white
-        pageControl.pageIndicatorTintColor = .gray
-        pageControl.currentPageIndicatorTintColor = .black
+    lazy var pageControl: CustomPageControl = {
+        let pageControl = CustomPageControl()
         return pageControl
     }()
 
     lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Стандартный с видом на бассейн или сад"
         label.numberOfLines = 0
         label.textColor = .black
         label.font = UIFont(name: "SFProDisplay-Medium", size: 22)
@@ -47,10 +42,8 @@ class RoomCell: UICollectionViewCell {
         return view
     }()
 
-    lazy var moreInfoButton: CustomColoredButton = {
-        let button = CustomColoredButton(frame: .zero, color: .blue, rightSideImage: true, title: "Подробнее о номере  ")
-        button.setImage(UIImage(systemName: "chevron.right",
-                                withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)), for: .normal)
+    lazy var moreInfoButton: ButtonWithTrailingImage = {
+        let button = ButtonWithTrailingImage(frame: .zero, imageName: "chevron.right", rightSideImage: true, title: "Подробнее о номере  ")
         return button
     }()
     
@@ -137,7 +130,7 @@ class RoomCell: UICollectionViewCell {
             let imageView = UIImageView()
             imageView.loadImage(from: imageUrl, defaultImage: UIImage(named: "defaultImage")) { result in
                 switch result {
-                case .success(let image):
+                case .success(_):
                     DispatchQueue.main.async {
                         imageView.contentMode = .scaleAspectFill
                     }
@@ -146,6 +139,7 @@ class RoomCell: UICollectionViewCell {
                         imageView.image = UIImage(named: "error")?.resize(targetSize: CGSize(width: 64, height: 64))
                         imageView.contentMode = .center
                     }
+                    print(error.localizedDescription)
                 }
             }
             imageView.clipsToBounds = true

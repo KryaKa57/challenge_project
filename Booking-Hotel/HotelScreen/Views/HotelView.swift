@@ -41,23 +41,19 @@ class HotelView: UIView {
         return scrollView
     }()
     
-    lazy var pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        pageControl.layer.cornerRadius = 8
-        pageControl.backgroundColor = .white
-        pageControl.pageIndicatorTintColor = .gray
-        pageControl.currentPageIndicatorTintColor = .black
+    lazy var pageControl: CustomPageControl = {
+        let pageControl = CustomPageControl()
         return pageControl
     }()
     
-    lazy var ratingButton: UIButton = {
-        let button = UIButton()
+    lazy var ratingButton: PaddedButton = {
+        let button = PaddedButton(padding: CGSize(width: 20, height: 10))
         button.setImage(UIImage(systemName: "star.fill"), for: .normal)
         button.setTitleColor(UIColor(rgb: 0xFFA800), for: .normal)
         button.tintColor = UIColor(rgb: 0xFFA800)
         button.backgroundColor = UIColor(rgb: 0xFFC700, alpha: 0.2)
         button.layer.cornerRadius = 5
-        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        //button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         button.isEnabled = false
         return button
     }()

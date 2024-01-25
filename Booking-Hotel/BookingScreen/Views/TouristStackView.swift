@@ -25,13 +25,12 @@ class TouristStackView: CustomStackView {
         return label
     }()
     
-    lazy var toggleButton: UIButton = {
-        let button = UIButton()
+    lazy var toggleButton: PaddedButton = {
+        let button = PaddedButton(padding: CGSize(width: 10, height: 0))
         let color = Color.blue
         button.setImage(UIImage(systemName: "chevron.up"), for: .normal)
         button.tintColor = color.getTitleColor()
         button.backgroundColor = color.getBackgroundColor()
-        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         button.layer.cornerRadius = 8
         return button
     }()

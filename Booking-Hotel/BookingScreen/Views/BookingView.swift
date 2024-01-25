@@ -32,17 +32,17 @@ class BookingView: UIView {
         return stack
     }()
     
-    lazy var ratingButton: UIButton = {
-        let button = UIButton()
+    lazy var ratingButton: PaddedButton = {
+        let button = PaddedButton(padding: CGSize(width: 20, height: 10))
         button.setImage(UIImage(systemName: "star.fill"), for: .normal)
         button.setTitleColor(UIColor(rgb: 0xFFA800), for: .normal)
         button.tintColor = UIColor(rgb: 0xFFA800)
         button.backgroundColor = UIColor(rgb: 0xFFC700, alpha: 0.2)
         button.layer.cornerRadius = 5
-        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         button.isEnabled = false
         return button
     }()
+
     
     lazy var nameLabel: UILabel = {
         let label = UILabel()
@@ -143,13 +143,12 @@ class BookingView: UIView {
         return label
     }()
     
-    lazy var addButton: UIButton = {
-        let button = UIButton()
+    lazy var addButton: PaddedButton = {
+        let button = PaddedButton(padding: CGSize(width: 0, height: 10))
         let color = Color.blue
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = color.getTitleColor()
-        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         button.layer.cornerRadius = 8
         return button
     }()
