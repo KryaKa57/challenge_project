@@ -9,36 +9,36 @@ import Foundation
 import UIKit
 
 class MoreInfoCell: UITableViewCell {
-    static var reuseIdentifier: String {
+    static var reuseIdentifier: String { // Идентификатор ячейки
         return String(describing: self)
     }
     
-    lazy var leftIconImageView: UIImageView = {
+    lazy var leftIconImageView: UIImageView = { // Иконка на левой части ячейки
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    lazy var titleStackView: UIStackView = {
+    lazy var titleStackView: UIStackView = { // Стак для заглавия и подзаголовка
         let stack = UIStackView()
         stack.axis = .vertical
         return stack
     }()
     
-    lazy var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = { // Заглавие ячейки
         let label = UILabel()
         label.textColor = .black
         return label
     }()
     
-    lazy var detailLabel: UILabel = {
+    lazy var detailLabel: UILabel = { // Подзаголовок ячейки
         let label = UILabel()
         label.text = TextConstants.allNecessary
         label.textColor = Color.gray().getUIColor()
         return label
     }()
     
-    lazy var rightIconImageView: UIImageView = {
+    lazy var rightIconImageView: UIImageView = { // Иконка на правой части ячейки
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: TextConstants.chevronRightIcon)
         imageView.tintColor = .black
@@ -49,20 +49,20 @@ class MoreInfoCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        setupViews()
+        setupViews() 
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    func configure(_ info: MoreInformation) {
+    func configure(_ info: MoreInformation) { // Настройка вида
         isUserInteractionEnabled = false
         leftIconImageView.image = UIImage(named: info.imageName)
         titleLabel.text = info.title
     }
     
-    private func setupViews() {
+    private func setupViews() { // Инициализация вьюшки
         backgroundColor = Color.lightGray().getUIColor()
         addSubview(leftIconImageView)
         titleStackView.addArrangedSubview(titleLabel)

@@ -36,6 +36,7 @@ class BookingViewController: UIViewController {
         fatalError(TextConstants.fatalErrorText)
     }
     
+    // Добавление делегатов к контроллеру и действий для кнопок
     func addDelegates() {
         bookingView.bookingInfoTableView.dataSource = self
         bookingView.bookingInfoTableView.delegate = self
@@ -50,52 +51,56 @@ class BookingViewController: UIViewController {
         bookingView.addButton.addTarget(self, action: #selector(addNewTourist), for: .touchUpInside)
     }
     
-    func setNavigation() {
+    func setNavigation() { // Установка элементов навигации
         navigationManager.setupNavigationBar(self, title: TextConstants.secondTitleText, hasLeftItem: true)
     }
     
-    @objc func checkFields() {
+    @objc func checkFields() { // Проверка на заполнение данных о туристе
         if !isAnyTextFieldEmpty(in: bookingView.allTouristStackView) {
             coordinator?.toFinalScreen()
         }
     }
     
-    @objc func addNewTourist() {
-        bookingViewModel.numberOfTourist += 1
-        let newTourist = TouristStackView(textValue: "\(bookingViewModel.numberOfTourist.toString())")
-        bookingView.allTouristStackView.addArrangedSubview(newTourist)
-        bookingView.layoutIfNeeded()
+    @objc func addNewTourist() { // Добавление нового туриста
+        bookingViewModel.numberOfTourist += 1 // Увеличиваем количество туристов
+        let newTourist = TouristStackView(textValue: "\(bookingViewModel.numberOfTourist.toString())") // Создаем вьюшку для туриста
+        bookingView.allTouristStackView.addArrangedSubview(newTourist) // Добавляем новую вьюшка в общий стак туристов
+        bookingView.layoutIfNeeded() // Обновляем вид экрана, размещая новую вьюшку
         
-        newTourist.toggleDropdown()
-        bookingView.layoutIfNeeded()
+        newTourist.toggleDropdown() // Переключить выпадающий списокть
+        bookingView.layoutIfNeeded() // Повторно обновляем вид экрана
     }
     
     func isAnyTextFieldEmpty(in stackView: UIStackView) -> Bool {
+        // Проверка на пустоту всех текстовых полей
         var hasEmptyTextField = false
-
-        let textFields = stackView.getAllTextFields()
+        
+        // Проверка текстовых полей внутри стака
+        let textFields = stackView.getAllTextFields() // Получение списка текстовых полей со стака
         for textField in textFields {
-            textField.delegate = self
             if textField.text?.isEmpty ?? true {
-                hasEmptyTextField = true
-                textField.colorError()
+                hasEmptyTextField = true // Если текст в поле пуст, то указываем, что меняем параметр на true
+                textField.colorError() // Закрашиваем поле в красный цвет
             }
         }
         
+        // Проверка заполненности номера телефона
         if !bookingView.isPhoneNumberFilled() {
-            hasEmptyTextField = true
-            bookingView.phoneNumberTextField.colorError()
+            hasEmptyTextField = true // Если текст в поле пуст, то указываем, что меняем параметр на true
+            bookingView.phoneNumberTextField.colorError() // Закрашиваем поле в красный цвет
         }
         
+        // Проверка валидности электронной почты
         if !bookingViewModel.isValidEmail(bookingView.emailTextField.text ?? "") {
-            hasEmptyTextField = true
-            bookingView.emailTextField.colorError()
+            hasEmptyTextField = true // Если текст в поле не прошла валидацию, то указываем, что меняем параметр на true
+            bookingView.emailTextField.colorError() // Закрашиваем поле в красный цвет
         }
         
         return hasEmptyTextField
     }
     
-    func initializeHideKeyboard(){
+    func initializeHideKeyboard() {
+        // Инициализация жеста нажатия
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(dismissMyKeyboard))
@@ -103,26 +108,31 @@ class BookingViewController: UIViewController {
     }
         
     @objc func dismissMyKeyboard(){
+        // Метод для скрытия клавиатуры при вызове жеста
         view.endEditing(true)
     }
 }
 
-extension BookingViewController: APIRequestDelegate {
-    func onSucceedRequest() {
+extension BookingViewController: APIRequestDelegate { // Делегаты при обработки запроса
+    func onSucceedRequest() { // Метод при удачном запросе
         DispatchQueue.main.async {
             guard let bookingInfo = self.bookingViewModel.bookingInformation else { return }
-            self.bookingView.configure(bookingInfo)
-            self.bookingView.bookingInfoTableView.reloadData()
+            self.bookingView.configure(bookingInfo) // Настройка вида с обновленными данными
+            self.bookingView.bookingInfoTableView.reloadData() // Обновляем данные в таблицах
             self.bookingView.bookingPriceTableView.reloadData()
         }
     }
     
-    func onFailedRequest(errorMessage: String) {
-        PopupManager.showLoginFailurePopUp(on: self.view, message:  "\(TextConstants.failedRequestMessage).\(errorMessage)")
+    func onFailedRequest(errorMessage: String) { // Метод при получении ошибки в запросе
+        DispatchQueue.main.async {
+            PopupManager.showLoginFailurePopUp(on: self.view, message: "\(TextConstants.failedRequestMessage).\(errorMessage)")
+            // Вывод модуля с текстом ошибки
+        }
     }
 }
 
 extension BookingViewController: NavigationManagerDelegate {
+    // Делегат с кнопки навигации для перехода на предыдущую страницу
     func backButtonTapped() {
         coordinator?.popViewController()
     }
@@ -130,37 +140,45 @@ extension BookingViewController: NavigationManagerDelegate {
 
 extension BookingViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Количество рядов секции
         return (tableView == bookingView.bookingInfoTableView) ? bookingViewModel.bookingInfoBlocks.count : bookingViewModel.bookingPriceBlocks.count
+        // Две таблицы в одном контроллере, поэтому делим их через проверку с сравнением
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // инициализация и настройка ячеек
         let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableCell.reuseIdentifier, for: indexPath) as! InfoTableCell
-            
+        
+        // Определение, для какой таблицы настраивается ячейка
         if tableView == bookingView.bookingPriceTableView {
-            configurePriceCell(cell, forRowAt: indexPath)
+            configurePriceCell(cell, forRowAt: indexPath) // Настройка ячейки для таблицы цен
         } else {
-            configureInfoCell(cell, forRowAt: indexPath)
+            configureInfoCell(cell, forRowAt: indexPath) // Настройка ячейки для таблицы с информацией
         }
             
         return cell
     }
     
     func configurePriceCell(_ cell: InfoTableCell, forRowAt indexPath: IndexPath) {
+        // Инициализация ячейки с ценой и их передача для конфигурации
         let (leftText, rightText) = bookingViewModel.getPriceTexts(indexPath.row)
         cell.configure(leftText: leftText, rightText: rightText)
         cell.distanceItems()
         
+        // Проверка, является ли ячейка последней в таблице цен и краска на синий цвет
         if indexPath.row == bookingViewModel.bookingPriceBlocks.count - 1 {
             cell.colorBlue()
         }
     }
 
     func configureInfoCell(_ cell: InfoTableCell, forRowAt indexPath: IndexPath) {
+        // Инициализация ячейки с информацией и их передача для конфигурации
         let (leftText, rightText) = bookingViewModel.getInfoTexts(indexPath.row)
         cell.configure(leftText: leftText, rightText: rightText)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        // Оценочная высота ячейки
         return 36
     }
 }

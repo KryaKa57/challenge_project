@@ -11,11 +11,11 @@ import SnapKit
 
 class RoomView: UIView {
     
-    lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = { // Коллекция видов комнат
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .vertical // Указываем направление прокрутки
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(RoomCell.self, forCellWithReuseIdentifier: RoomCell.reuseIdentifier)
+        collectionView.register(RoomCell.self, forCellWithReuseIdentifier: RoomCell.reuseIdentifier) // Регистрация ячейки
         collectionView.backgroundColor = Color.background().getUIColor()
         return collectionView
     }()
@@ -33,10 +33,7 @@ class RoomView: UIView {
         super.layoutSubviews()
     }
     
-    func configure() {
-    }
-    
-    private func initialize() {
+    private func initialize() { // Инициализация вида
         backgroundColor = UIColor.white
         addSubview(collectionView)
         

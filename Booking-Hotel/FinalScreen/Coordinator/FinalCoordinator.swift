@@ -9,22 +9,21 @@ import Foundation
 import UIKit
 
 
-final class FinalCoordinator: ChildCoordinator {
-    var viewControllerRef: UIViewController?
-    var parent: HotelCoordinator?
-    var navigationController: UINavigationController
+final class FinalCoordinator: ChildCoordinator { // Координатор "Финал"
+    var parent: HotelCoordinator? // Родительский координатор
+    var navigationController: UINavigationController // Навигационный контроллер для переходов
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController) { // Инициализация
         self.navigationController = navigationController
     }
     
-    func start(animated: Bool) {
+    func start(animated: Bool) { // Метод с протокола для старта координатора
         let finalViewController = FinalViewController()
         finalViewController.coordinator = self
         navigationController.pushViewController(finalViewController, animated: animated)
     }
     
-    func coordinatorDidFinish() {
-        parent?.childDidFinish(self)
+    func coordinatorDidFinish() { // Метод с протокола при отключении координатора
+        parent?.childDidFinish(self) // вызывается родитель для удаления со списка детей
     }
 }

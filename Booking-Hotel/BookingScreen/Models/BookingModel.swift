@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Booking: Codable {
+struct Booking: Codable { // Структура для получения данных с API запроса
     let id: Int
     let hotelName, hotelAdress: String
     let horating: Int
@@ -18,7 +18,7 @@ struct Booking: Codable {
     let tourPrice, fuelCharge, serviceCharge: Int
 }
 
-struct TableData {
+struct TableData { // Струтура для хранения данных с TableView
     let title: String
     let description: String
 }

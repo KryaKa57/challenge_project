@@ -34,16 +34,17 @@ class FinalViewController: UIViewController {
         fatalError(TextConstants.fatalErrorText)
     }
     
-    func setNavigation() {
+    func setNavigation() { // Установка элементов навигации
         navigationManager.setupNavigationBar(self, title: TextConstants.orderPaidText, hasLeftItem: true)
     }
     
-    @objc func goBackToFirstScreen() {
+    @objc func goBackToFirstScreen() { // Метод для перехода к корневому контроллеру
         coordinator?.popToRootViewController()
     }
 }
 
 extension FinalViewController: NavigationManagerDelegate {
+    // Делегат с кнопки навигации для перехода на предыдущую страницу
     func backButtonTapped() {
         coordinator?.popViewController()
     }

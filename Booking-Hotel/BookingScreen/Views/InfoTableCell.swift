@@ -10,11 +10,11 @@ import UIKit
 import SnapKit
 
 class InfoTableCell: UITableViewCell {
-    static var reuseIdentifier: String {
+    static var reuseIdentifier: String { // Идентификатор ячейки
         return String(describing: self)
     }
     
-    let leftTextLabel: UILabel = {
+    let leftTextLabel: UILabel = { // Текст на левой части ячейки
         let label = UILabel()
         label.textColor = .gray
         label.numberOfLines = 0
@@ -22,7 +22,7 @@ class InfoTableCell: UITableViewCell {
         return label
     }()
     
-    let rightTextLabel: UILabel = {
+    let rightTextLabel: UILabel = { // Текст на правой части ячейки
         let label = UILabel()
         label.textColor = .black
         label.numberOfLines = 0
@@ -30,7 +30,7 @@ class InfoTableCell: UITableViewCell {
         return label
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) { // Инициализация ячейки
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .white
         contentView.addSubview(leftTextLabel)
@@ -57,16 +57,16 @@ class InfoTableCell: UITableViewCell {
         }
     }
     
-    func configure(leftText: String, rightText: String) {
+    func configure(leftText: String, rightText: String) { // Настройка ячейки
         leftTextLabel.text = leftText
         rightTextLabel.text = rightText
     }
     
-    func distanceItems() {
+    func distanceItems() { // Метод для выравнивания текста в правую сторону
         rightTextLabel.textAlignment = .right
     }
     
-    func colorBlue() {
+    func colorBlue() { // Покраска в синий цвет
         rightTextLabel.textColor = Color.blue().getUIColor()
         rightTextLabel.font = FontConstant.bold().getUIFont()
     }

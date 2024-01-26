@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RoomData: Codable {
+struct RoomData: Codable { // Структура для получения данных с API запроса
     let rooms: [Room]
 }
 

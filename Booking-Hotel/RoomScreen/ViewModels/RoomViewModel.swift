@@ -8,11 +8,11 @@
 import Foundation
 
 class RoomViewModel {
-    var title: String?
-    var roomsInformation: [Room]?
-    var delegate: APIRequestDelegate?
+    var title: String? // Заглавие контроллера
+    var roomsInformation: [Room]? // Информация о типах комнат
+    var delegate: APIRequestDelegate? // // Создание переменной делегата
     
-    func getInfo() {
+    func getInfo() { // Функция для получения данных об отеле
         let endpoint = Endpoint.getRooms()
         NetworkManager.request(data: nil, with: endpoint) { [weak self] (result: Result<RoomData, NetworkError>) in
             switch result {
@@ -20,6 +20,7 @@ class RoomViewModel {
                 self?.roomsInformation = res.rooms
                 self?.delegate?.onSucceedRequest()
             case .failure(let err):
+                self?.delegate?.onFailedRequest(errorMessage: err.getErrorMessage())
                 print(err.localizedDescription)
             }
         }

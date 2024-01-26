@@ -8,10 +8,9 @@
 import Foundation
 import UIKit
 
-final class BookingCoordinator: ChildCoordinator {
-    var viewControllerRef: UIViewController?
-    var parent: HotelCoordinator?
-    var navigationController: UINavigationController
+final class BookingCoordinator: ChildCoordinator { // Координатор "Бронирование"
+    var parent: HotelCoordinator? // Родительский координатор
+    var navigationController: UINavigationController // Навигационный контроллер для переходов
     
     lazy var bookingViewModel: BookingViewModel! = {
         let viewModel = BookingViewModel()
@@ -19,20 +18,21 @@ final class BookingCoordinator: ChildCoordinator {
         return viewModel
     }()
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController) { // Инициализация
         self.navigationController = navigationController
     }
     
-    func start(animated: Bool) {
+    func start(animated: Bool) {  // Метод с протокола для старта координатора
         let bookingViewController = BookingViewController(viewModel: bookingViewModel)
         bookingViewController.coordinator = self
         navigationController.pushViewController(bookingViewController, animated: animated)
     }
     
-    func coordinatorDidFinish() {
-        parent?.childDidFinish(self)
+    func coordinatorDidFinish() { // Метод с протокола при отключении координатора
+        parent?.childDidFinish(self) // вызывается родитель для удаления со списка детей
     }
-    func toFinalScreen() {
+    
+    func toFinalScreen() { // Метод для перехода к финального экрана
         parent?.finalScreen(navigationController: navigationController, animated: true)
     }
 }

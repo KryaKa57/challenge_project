@@ -7,28 +7,30 @@
 
 import Foundation
 
-protocol APIRequestDelegate {
-    func onSucceedRequest()
-    func onFailedRequest(errorMessage: String)
+protocol APIRequestDelegate { // Создание делегата
+    func onSucceedRequest() // Функция при успешном выполнении запросаи
+    func onFailedRequest(errorMessage: String) // Функция при неудачном запросе
 }
 
 class HotelViewModel {
     
-    var hotelInformation: Hotel?
-    var delegate: APIRequestDelegate?
+    var hotelInformation: Hotel? // Информация об отеле
+    var delegate: APIRequestDelegate? // Создание переменной делегата
     let moreInformation = [MoreInformation(title: TextConstants.moreInfoFirstTitle, imageName: TextConstants.moreInfoFirstIcon),
                            MoreInformation(title: TextConstants.moreInfoSecondTitle, imageName: TextConstants.moreInfoSecondIcon),
-                           MoreInformation(title: TextConstants.moreInfoThirdTitle, imageName: TextConstants.moreInfoThirdIcon)]
+                           MoreInformation(title: TextConstants.moreInfoThirdTitle, imageName: TextConstants.moreInfoThirdIcon)]  // Данные для таблицы с условиями отеля
     
-    func getInfo() {
-        let endpoint = Endpoint.getHotel()
+    func getInfo() { // Функция для получения данных об отеле
+        let endpoint = Endpoint.getHotel() // Создание конечного пункта
+        
+        // Вызываем сетевой запрос для получения данных с конечным пунктом
         NetworkManager.request(data: nil, with: endpoint) { [weak self] (result: Result<Hotel, NetworkError>) in
             switch result {
-            case .success(let res):
-                self?.hotelInformation = res
-                self?.delegate?.onSucceedRequest()
-            case .failure(let err):
-                self?.delegate?.onFailedRequest(errorMessage: err.getErrorMessage())
+            case .success(let res): // При успешном выполнении
+                self?.hotelInformation = res // Сохранение информации об отеле
+                self?.delegate?.onSucceedRequest() // Вызов делегата
+            case .failure(let err): // При получении ошибки
+                self?.delegate?.onFailedRequest(errorMessage: err.getErrorMessage()) // Вызов делегата
             }
         }
     }

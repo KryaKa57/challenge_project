@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Hotel: Codable {
+struct Hotel: Codable { // Структура для получения данных с API запроса
     let id: Int
     let name: String
     let adress: String
@@ -19,12 +19,12 @@ struct Hotel: Codable {
     let aboutTheHotel: AboutTheHotel
 }
 
-struct AboutTheHotel: Codable {
+struct AboutTheHotel: Codable { // Структура для получения данных с API запроса
     let description: String
     let peculiarities: [String]
 }
 
-struct MoreInformation {
+struct MoreInformation { // Струтура для хранения данных с TableView
     let title: String
     let imageName: String
 }

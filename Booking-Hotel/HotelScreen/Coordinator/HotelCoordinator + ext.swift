@@ -9,7 +9,10 @@ import Foundation
 import UIKit
 
 extension HotelCoordinator {
+    // Дополнение к координатору для переходов в другие экраны
+    
     func roomScreen(navigationController: UINavigationController, animated: Bool, roomName: String?) {
+        // Создание координатора "Комната"
         let roomCoordinator = RoomCoordinator(text: roomName, navigationController: navigationController)
         roomCoordinator.parent = self
         addChild(roomCoordinator)
@@ -17,6 +20,7 @@ extension HotelCoordinator {
     }
     
     func bookingScreen(navigationController: UINavigationController, animated: Bool) {
+        // Создание координатора "Бронирование"
         let bookingCoordinator = BookingCoordinator(navigationController: navigationController)
         bookingCoordinator.parent = self
         addChild(bookingCoordinator)
@@ -24,6 +28,7 @@ extension HotelCoordinator {
     }
     
     func finalScreen(navigationController: UINavigationController, animated: Bool) {
+        // Создание координатора "Финал"
         let finalCoordinator = FinalCoordinator(navigationController: navigationController)
         finalCoordinator.parent = self
         addChild(finalCoordinator)

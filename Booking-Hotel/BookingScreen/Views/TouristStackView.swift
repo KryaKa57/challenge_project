@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-class TouristStackView: CustomStackView {
-    lazy var touristHeaderStackView: UIStackView = {
+class TouristStackView: CustomStackView { // Кастомный Стак для всех туристов
+    lazy var touristHeaderStackView: UIStackView = { // Заголовок стака
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fillProportionally
@@ -17,7 +17,7 @@ class TouristStackView: CustomStackView {
         return stack
     }()
     
-    lazy var numberTouristLabel: UILabel = {
+    lazy var numberTouristLabel: UILabel = { // Номер туриста
         let label = UILabel()
         label.text = TextConstants.firstTouristText
         label.font = FontConstant.medium().getUIFont(size: 22)
@@ -25,7 +25,7 @@ class TouristStackView: CustomStackView {
         return label
     }()
     
-    lazy var toggleButton: PaddedButton = {
+    lazy var toggleButton: PaddedButton = { // Кнопка переключения
         let button = PaddedButton(padding: CGSize(width: 10, height: 0))
         let color = Color.blue()
         button.setImage(UIImage(systemName: TextConstants.chevronUpIcon), for: .normal)
@@ -35,12 +35,12 @@ class TouristStackView: CustomStackView {
         return button
     }()
     
-    lazy var dropdownStackView: TextFieldStackView = {
+    lazy var dropdownStackView: TextFieldStackView = { // Выпадающий стак информации о туристе
         let stackView = TextFieldStackView()
         return stackView
     }()
     
-    required init(textValue: String) {
+    required init(textValue: String) { // Инициализация стака
         super.init()
         self.numberTouristLabel.text = textValue
         setup()
@@ -54,7 +54,7 @@ class TouristStackView: CustomStackView {
         fatalError(TextConstants.fatalErrorText)
     }
     
-    private func setup() {
+    private func setup() { // Установка стака
         toggleButton.addTarget(self, action: #selector(toggleDropdown), for: .touchUpInside)
         
         touristHeaderStackView.addArrangedSubview(numberTouristLabel)
@@ -74,7 +74,7 @@ class TouristStackView: CustomStackView {
         }
     }
         
-    @objc func toggleDropdown() {
+    @objc func toggleDropdown() { // Переключение выпадающего списка
         UIView.animate(withDuration: 0.3) {
             self.dropdownStackView.isHidden = !self.dropdownStackView.isHidden
             let image = UIImage(systemName: (self.dropdownStackView.isHidden ? TextConstants.chevronDownIcon : TextConstants.chevronUpIcon))
