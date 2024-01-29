@@ -5,6 +5,8 @@
 //  Created by Alisher on 15.01.2024.
 //
 
+// Compositional layout
+
 import Foundation
 import UIKit
 
@@ -27,7 +29,7 @@ class HotelViewController: UIViewController {
     
     init(viewModel: HotelViewModel) {
         hotelViewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: nil,   bundle: nil)
     }
     
     required init?(coder: NSCoder) {

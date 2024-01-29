@@ -23,6 +23,7 @@ class HotelViewModel {
     func getInfo() { // Функция для получения данных об отеле
         let endpoint = Endpoint.getHotel() // Создание конечного пункта
         
+        
         // Вызываем сетевой запрос для получения данных с конечным пунктом
         NetworkManager.request(data: nil, with: endpoint) { [weak self] (result: Result<Hotel, NetworkError>) in
             switch result {

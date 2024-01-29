@@ -8,6 +8,7 @@ target 'Booking-Hotel' do
   # Pods for Neobis_iOS_WeatherApp
   pod 'SnapKit', '~> 5.0.0'
   pod 'JVFloatLabeledTextField'
+  pod 'SwiftLint'
 
   post_install do |installer|
     installer.pods_project.targets.each do |target|
