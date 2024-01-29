@@ -68,6 +68,7 @@
 		64B18E272B6803B8003F2674 /* TextContrants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B18E262B6803B8003F2674 /* TextContrants.swift */; };
 		64B18E292B6803BE003F2674 /* FontConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B18E282B6803BE003F2674 /* FontConstant.swift */; };
 		64B18E2B2B680406003F2674 /* Extension + Subviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B18E2A2B680406003F2674 /* Extension + Subviews.swift */; };
+		64B18E2D2B680773003F2674 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B18E2C2B680773003F2674 /* Constant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +137,7 @@
 		64B18E262B6803B8003F2674 /* TextContrants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContrants.swift; sourceTree = "<group>"; };
 		64B18E282B6803BE003F2674 /* FontConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontConstant.swift; sourceTree = "<group>"; };
 		64B18E2A2B680406003F2674 /* Extension + Subviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Subviews.swift"; sourceTree = "<group>"; };
+		64B18E2C2B680773003F2674 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -440,6 +442,7 @@
 				64B18E242B6803A6003F2674 /* Color.swift */,
 				64B18E262B6803B8003F2674 /* TextContrants.swift */,
 				64B18E282B6803BE003F2674 /* FontConstant.swift */,
+				64B18E2C2B680773003F2674 /* Constant.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				649CA2852B56EB220060A2F4 /* Extension + UIImage.swift in Sources */,
 				6452924A2B55B83C00855E7E /* Extension + UIColor.swift in Sources */,
 				64B18E1A2B68031F003F2674 /* TextFieldStackView.swift in Sources */,
+				64B18E2D2B680773003F2674 /* Constant.swift in Sources */,
 				649CA29F2B57C9570060A2F4 /* BookingModel.swift in Sources */,
 				649CA2A12B57DD150060A2F4 /* InfoTableCell.swift in Sources */,
 				649CA2D42B5D96830060A2F4 /* SceneDelegate.swift in Sources */,
