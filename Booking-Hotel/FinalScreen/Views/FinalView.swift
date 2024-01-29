@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class FinalView: UIView {    
+class FinalView: UIView {
     lazy var mainStackView: UIStackView = { // Стак для всех элементов
         let stack = UIStackView()
         stack.axis = .vertical

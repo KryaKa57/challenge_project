@@ -8,20 +8,20 @@
 import Foundation
 import UIKit
 
-class CustomStackView: UIStackView {
-    
-    let padding = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-    
+class CustomStackView: UIStackView { // Класс с кастомным стаком
+
+    let padding = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16) // Отступы
+
     required init() {
         super.init(frame: .zero)
         setup()
     }
-        
+
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(TextConstants.fatalErrorText)
     }
-        
-    private func setup() {
+
+    private func setup() { // Настройки стака
         spacing = 16
         alignment = .leading
         axis = .vertical

@@ -49,7 +49,7 @@ class MoreInfoCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        setupViews() 
+        setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {

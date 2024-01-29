@@ -81,7 +81,7 @@ class BookingView: UIView {
     
     lazy var customerInfoLabel: UILabel = { // Заглавие стака
         let label = UILabel()
-        label.text = TextConstants.infoAboutTourist 
+        label.text = TextConstants.infoAboutTourist
         label.font = FontConstant.medium().getUIFont(size: 22)
         label.textColor = .black
         return label

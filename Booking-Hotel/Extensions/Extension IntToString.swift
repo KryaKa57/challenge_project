@@ -16,14 +16,14 @@ extension Int {
 
         return formattedString + " ₽"
     }
-    
+
     func toString() -> String {
         let russianNumerals = ["", "Первый", "Второй", "Третий", "Четвёртый", "Пятый"]
 
         if self < russianNumerals.count {
-            return russianNumerals[self]
+            return "\(russianNumerals[self]) турист"
         } else {
-            return "\(self)-й"
+            return "\(self)-й турист"
         }
     }
 }
