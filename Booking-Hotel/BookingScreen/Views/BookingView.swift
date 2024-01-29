@@ -210,7 +210,7 @@ class BookingView: UIView {
     
     func isPhoneNumberFilled() -> Bool { // Проверка номера телефона на заполненность
         return !(phoneNumberTextField.text?.isEmpty ?? true)
-                || !(phoneNumberTextField.text?.contains("*") ?? true)
+                && !(phoneNumberTextField.text?.contains("*") ?? true)
     }
     
     private func initialize() { // Инициализация вида

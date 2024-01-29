@@ -203,7 +203,10 @@ extension BookingViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == bookingView.emailTextField && !bookingViewModel.isValidEmail(textField.text ?? "") {
-            bookingView.emailTextField.backgroundColor = Color.error().getUIColor()
+            textField.backgroundColor = Color.error().getUIColor()
+        }
+        if textField == bookingView.phoneNumberTextField && !bookingView.isPhoneNumberFilled() {
+            textField.backgroundColor = Color.error().getUIColor()
         }
     }
 }
